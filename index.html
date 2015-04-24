@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>My first Three.js app</title>
+		<title>MACOUBRE</title>
 		<style>
 			body { margin: 0; }
 			canvas { width: 100%; height: 100% }
@@ -29,7 +29,19 @@
 			var shape2 = new THREE.Mesh(geo2, mat2);
 			scene.add(shape2);
 
-			camera.position.z = 5;
+			// SHAPE 3
+			var geo3 = new THREE.SphereGeometry( 1.5, 2, 2);
+			var mat3 = new THREE.MeshBasicMaterial( {color: 0xaed2ef, wireframe: true} );
+			var shape3 = new THREE.Mesh(geo3, mat3);
+			scene.add(shape3);
+
+			// SHAPE 4
+			var geo4 = new THREE.SphereGeometry( 2, 2, 2);
+			var mat4 = new THREE.MeshBasicMaterial( {color: 0xaed2ef, wireframe: true} );
+			var shape4 = new THREE.Mesh(geo4, mat4);
+			scene.add(shape4);
+
+			camera.position.z = 4;
 
 			function render() {
 				requestAnimationFrame(render);
@@ -37,6 +49,10 @@
 				shape.rotation.y += 0.001;
 				shape2.rotation.x += 0.001;
 				shape2.rotation.y += 0.005;
+				shape3.rotation.x += 0.001;
+				shape3.rotation.y += 0.005;
+				shape4.rotation.x += 0.001;
+				shape4.rotation.y += 0.005;
 				renderer.render(scene,camera);
 			}
 			render();
