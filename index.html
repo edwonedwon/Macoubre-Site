@@ -17,10 +17,17 @@
 			renderer.setSize( window.innerWidth, window.innerHeight);
 			document.body.appendChild( renderer.domElement );
 
-			var geometry = new THREE.SphereGeometry(8,20,10);
+			// SHAPE 1
+			var geo = new THREE.SphereGeometry(8,20,10);
 			var material = new THREE.MeshBasicMaterial({color: 0xaed2ef, wireframe: true});
-			var shape = new THREE.Mesh( geometry, material );
+			var shape = new THREE.Mesh( geo, material );
 			scene.add(shape);
+
+			// SHAPE 2
+			var geo2 = new THREE.SphereGeometry( 1, 2, 2);
+			var mat2 = new THREE.MeshBasicMaterial( {color: 0xaed2ef, wireframe: true} );
+			var shape2 = new THREE.Mesh(geo2, mat2);
+			scene.add(shape2);
 
 			camera.position.z = 5;
 
@@ -28,6 +35,8 @@
 				requestAnimationFrame(render);
 				shape.rotation.x += 0.001;
 				shape.rotation.y += 0.001;
+				shape2.rotation.x += 0.001;
+				shape2.rotation.y += 0.005;
 				renderer.render(scene,camera);
 			}
 			render();
