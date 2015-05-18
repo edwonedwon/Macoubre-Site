@@ -12,15 +12,53 @@
 				background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#236799), color-stop(85%,#152f54));
 				background: -webkit-radial-gradient(center, ellipse cover,  #236799 0%,#152f54 85%);
 				background: -o-radial-gradient(center, ellipse cover,  #236799 0%,#152f54 85%);
-				background: -ms-radial-gradient(center, ellipse cover,  #236799 0%,#152f54 85%);
+				background: -ms-radial-gradient(center, ellipse cover,  #	236799 0%,#152f54 85%);
 				background: radial-gradient(ellipse at center,  #236799 0%,#152f54 85%);
 			}
 		</style>
 	</head>
 	<body>
 		<script src="js/three.min.js"></script>
-		<script src="js/BokehPass.js"></script>
+		<script src="js/dat.gui.min.js"></script>
 		<script>
+			////// UI //////
+			// define the UI parameters
+			var FizzyText = function() 
+			{
+			  this.message = 'dat.gui';
+			  this.speed = 0.8;
+			  this.displayOutline = false;
+			  this.explode = function() { };
+			  // Define render logic ...
+			};
+
+			window.onload = function() 
+			{
+			  var text = new FizzyText();
+			  var gui = new dat.GUI();
+			  gui.add(text, 'message');
+			  gui.add(text, 'speed', -5, 5);
+			  gui.add(text, 'displayOutline');
+			  gui.add(text, 'explode');
+			};
+
+			////// AUDIO //////
+			var context;
+			window.addEventListener('load', init, false);
+			function init() 
+			{
+			  try 
+			  {
+			    // Fix up for prefixing
+			    window.AudioContext = window.AudioContext||window.webkitAudioContext;
+			    context = new AudioContext();
+			  }
+			  catch(e) 
+			  {
+			    alert('Web Audio API is not supported in this browser');
+			  }
+			}
+			////// 3D //////
 			// Our Javascript will go here.
 			var scene = new THREE.Scene();
 			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
