@@ -1,0 +1,90 @@
+<html>
+	<head>
+		<title>MACOUBRE</title>
+		<style>
+			body { margin: 0; }
+			canvas 
+			{ 
+				width: 100%; 
+				height: 100% 
+				background: #236799;
+				background: -moz-radial-gradient(center, ellipse cover,  #236799 0%, #152f54 85%);
+				background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#236799), color-stop(85%,#152f54));
+				background: -webkit-radial-gradient(center, ellipse cover,  #236799 0%,#152f54 85%);
+				background: -o-radial-gradient(center, ellipse cover,  #236799 0%,#152f54 85%);
+				background: -ms-radial-gradient(center, ellipse cover,  #	236799 0%,#152f54 85%);
+				background: radial-gradient(ellipse at center,  #236799 0%,#152f54 85%);
+			}
+			iframe
+			{
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				background-color: transparent!important;
+			}
+
+		</style>
+	</head>
+	<body>
+
+		<script src="js/three.min.js"></script>
+		<script>
+
+			////// 3D //////
+			// Our Javascript will go here.
+					var scene = new THREE.Scene();
+		var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+		var renderer = new THREE.WebGLRenderer();
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		//create sun and add to scene
+		var sun_geometry = new THREE.SphereGeometry( 0.75, 64, 64 );
+		var sun_material = new THREE.MeshBasicMaterial( {color: 0xffff00, wireframe: false});
+		var sun = new THREE.Mesh( sun_geometry, sun_material );
+		sun.position.set(0, 0, 0);
+		scene.add( sun );
+
+		//create point light source to emanate from sun
+		var light = new THREE.PointLight( 0xffff00, 5, 0 );
+		light.position.set( 0, 0, 0 );
+		sun.add( light );
+
+		//create planet and add to scene
+		var planet_geometry = new THREE.SphereGeometry( 0.25, 32, 32 );
+		var planet_material = new THREE.MeshLambertMaterial( {color: 0x0022ff, wireframe: false});
+		var planet = new THREE.Mesh( planet_geometry, planet_material );
+		planet.position.set(0.75, 0.95, 0.5);
+		scene.add( planet );
+
+		//create second planet and add to scene
+		var planet2_geometry = new THREE.SphereGeometry( 0.25, 32, 32 );
+		var planet2_material = new THREE.MeshLambertMaterial( {color: 0xff55ff, wireframe: false});
+		var planet2 = new THREE.Mesh( planet2_geometry, planet2_material );
+		planet2.position.set(-0.65, 1.95, 1.75);
+		scene.add( planet2 );
+
+		//set camera position in scene
+		camera.position.z = 5;
+
+		var t = 0;
+
+		var render = function () {
+		  requestAnimationFrame( render );
+		  t += 0.01;
+		  
+		  planet.position.x = 2*Math.cos(t) + 0;
+		  planet.position.z = 2*Math.sin(t) + 0; 
+		  
+		  planet2.position.x = 2*Math.sin(t) + 0;
+		  planet2.position.y = 2*Math.cos(t) + 0; 
+
+		  renderer.render(scene, camera);
+		};
+
+		render();
+
+		</script>
+	</body>
+</html>

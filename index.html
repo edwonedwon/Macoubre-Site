@@ -8,17 +8,11 @@
 				width: 100%; 
 				height: 100% 
 				background: #236799;
-				background: -moz-radial-gradient(center, ellipse cover,  #236799 0%, #152f54 85%);
-				background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#236799), color-stop(85%,#152f54));
-				background: -webkit-radial-gradient(center, ellipse cover,  #236799 0%,#152f54 85%);
-				background: -o-radial-gradient(center, ellipse cover,  #236799 0%,#152f54 85%);
-				background: -ms-radial-gradient(center, ellipse cover,  #	236799 0%,#152f54 85%);
-				background: radial-gradient(ellipse at center,  #236799 0%,#152f54 85%);
 			}
 			iframe
 			{
 				position: absolute;
-				top: 0px;
+				bottom: 0px;
 				left: 0px;
 				background-color: transparent!important;
 			}
@@ -26,79 +20,146 @@
 		</style>
 	</head>
 	<body>
-		<!-- 
-		<iframe width="250" height="100%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/5389544&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=false"></iframe>
-		-->
+		
+<iframe width="350" height="100%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/5389544&amp;color=000000&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>
+		
+		<div id="WebGL-output">
+		</div>
 
-		<script src="js/three.min.js"></script>
-		<script>
-
-			////// AUDIO //////
-			var context;
-			window.addEventListener('load', init, false);
-			function init() 
-			{
-			  try 
-			  {
-			    // Fix up for prefixing
-			    window.AudioContext = window.AudioContext||window.webkitAudioContext;
-			    context = new AudioContext();
-			  }
-			  catch(e) 
-			  {
-			    alert('Web Audio API is not supported in this browser');
-			  }
+		<style>
+			body {
+			  margin: 0;
+			  overflow: hidden;
 			}
-			////// 3D //////
-			// Our Javascript will go here.
-			var scene = new THREE.Scene();
-			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+		</style>
+	<script src="js/three.min.js"></script>
+	<script>
+		    // once everything is loaded, we run our Three.js stuff.
 
-			//  Changing three.js background to transparent or other color
-			var renderer = new THREE.WebGLRenderer({alpha: true});
-			renderer.setSize( window.innerWidth, window.innerHeight);
-			document.body.appendChild( renderer.domElement );
 
-			// SHAPE 1
-			var geo = new THREE.SphereGeometry(8,20,10);
-			var material = new THREE.MeshBasicMaterial({color: 0xaed2ef, wireframe: true});
-			var shape = new THREE.Mesh( geo, material );
-			scene.add(shape);
+	        // create a scene, that will hold all our elements such as objects, cameras and lights.
+	        var scene = new THREE.Scene();
 
-			// SHAPE 2
-			var geo2 = new THREE.SphereGeometry( 1, 2, 2);
-			var mat2 = new THREE.MeshBasicMaterial( {color: 0xaed2ef, wireframe: true} );
-			var shape2 = new THREE.Mesh(geo2, mat2);
-			// scene.add(shape2);
+	        // create a camera, which defines where we're looking at.
+	        var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-			// SHAPE 3
-			var geo3 = new THREE.SphereGeometry( 1.5, 2, 2);
-			var mat3 = new THREE.MeshBasicMaterial( {color: 0xaed2ef, wireframe: true} );
-			var shape3 = new THREE.Mesh(geo3, mat3);
-			// scene.add(shape3);
+	        // create a render and set the size
+	        var webGLRenderer = new THREE.WebGLRenderer();
+	        webGLRenderer.setClearColor(new THREE.Color(0x000000, 1.0));
+	        webGLRenderer.setSize(window.innerWidth, window.innerHeight);
+	        webGLRenderer.shadowMapEnabled = true;
 
-			// SHAPE 4
-			var geo4 = new THREE.SphereGeometry( 2, 2, 2);
-			var mat4 = new THREE.MeshBasicMaterial( {color: 0xaed2ef, wireframe: true} );
-			var shape4 = new THREE.Mesh(geo4, mat4);
-			// scene.add(shape4);
 
-			camera.position.z = 4;
+	        // position and point the camera to the center of the scene
+	        camera.position.x = -30;
+	        camera.position.y = 40;
+	        camera.position.z = 50;
+	        camera.lookAt(new THREE.Vector3(10, 0, 0));
 
-			function render() {
-				requestAnimationFrame(render);
-				shape.rotation.x += 0.001;
-				shape.rotation.y += 0.001;
-				shape2.rotation.x += 0.001;
-				shape2.rotation.y += 0.005;
-				shape3.rotation.x += 0.001;
-				shape3.rotation.y += 0.005;
-				shape4.rotation.x += 0.001;
-				shape4.rotation.y += 0.005;
-				renderer.render(scene,camera);
-			}
-			render();
+	        // add the output of the renderer to the html element
+			document.body.appendChild(webGLRenderer.domElement);
 
-		</script>
+	        // call the render function
+	        var step = 0;
+
+	        var knot;
+
+	        // setup the control gui
+	        var controls = new function () {
+	            // we need the first child, since it's a multimaterial
+	            this.radius = 40;
+	            this.tube = 28.2;
+	            this.radialSegments = 600;
+	            this.tubularSegments = 12;
+	            this.p = 5;
+	            this.q = 4;
+	            this.heightScale = 4;
+	            this.asParticles = true;
+	            this.rotate = true;
+
+	            this.redraw = function () {
+	                // remove the old plane
+	                if (knot) scene.remove(knot);
+	                // create a new one
+	                var geom = new THREE.TorusKnotGeometry(controls.radius, controls.tube, Math.round(controls.radialSegments), Math.round(controls.tubularSegments), Math.round(controls.p), Math.round(controls.q), controls.heightScale);
+
+	                if (controls.asParticles) {
+	                    knot = createParticleSystem(geom);
+	                } else {
+	                    knot = createMesh(geom);
+	                }
+
+	                // add it to the scene.
+	                scene.add(knot);
+	            };
+
+	        }
+
+	        controls.redraw();
+
+	        render();
+
+	        // from THREE.js examples
+	        function generateSprite() {
+
+	            var canvas = document.createElement('canvas');
+	            canvas.width = 16;
+	            canvas.height = 16;
+
+	            var context = canvas.getContext('2d');
+	            var gradient = context.createRadialGradient(canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2);
+	            gradient.addColorStop(0, 'rgba(255,255,255,1)');
+	            gradient.addColorStop(0.2, 'rgba(0,255,255,1)');
+	            gradient.addColorStop(0.4, 'rgba(0,0,64,1)');
+	            gradient.addColorStop(1, 'rgba(0,0,0,1)');
+
+	            context.fillStyle = gradient;
+	            context.fillRect(0, 0, canvas.width, canvas.height);
+
+	            var texture = new THREE.Texture(canvas);
+	            texture.needsUpdate = true;
+	            return texture;
+
+	        }
+
+	        function createParticleSystem(geom) {
+	            var material = new THREE.ParticleBasicMaterial({
+	                color: 0xffffff,
+	                size: 3,
+	                transparent: true,
+	                blending: THREE.AdditiveBlending,
+	                map: generateSprite()
+	            });
+
+	            var system = new THREE.ParticleSystem(geom, material);
+	            system.sortParticles = true;
+	            return system;
+	        }
+
+	        function createMesh(geom) {
+
+	            // assign two materials
+	            var meshMaterial = new THREE.MeshNormalMaterial({});
+	            meshMaterial.side = THREE.DoubleSide;
+
+	            // create a multimaterial
+	            var mesh = THREE.SceneUtils.createMultiMaterialObject(geom, [meshMaterial]);
+
+	            return mesh;
+	        }
+
+	        function render() {
+
+	            if (controls.rotate) {
+	                knot.rotation.y = step += 0.0003;
+	            }
+
+	            // render using requestAnimationFrame
+	            requestAnimationFrame(render);
+	            webGLRenderer.render(scene, camera);
+	        }
+
+	  
+	    </script>
 	</body>
 </html>

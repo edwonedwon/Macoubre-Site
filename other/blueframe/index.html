@@ -1,0 +1,104 @@
+<html>
+	<head>
+		<title>MACOUBRE</title>
+		<style>
+			body { margin: 0; }
+			canvas 
+			{ 
+				width: 100%; 
+				height: 100% 
+				background: #236799;
+				background: -moz-radial-gradient(center, ellipse cover,  #236799 0%, #152f54 85%);
+				background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#236799), color-stop(85%,#152f54));
+				background: -webkit-radial-gradient(center, ellipse cover,  #236799 0%,#152f54 85%);
+				background: -o-radial-gradient(center, ellipse cover,  #236799 0%,#152f54 85%);
+				background: -ms-radial-gradient(center, ellipse cover,  #	236799 0%,#152f54 85%);
+				background: radial-gradient(ellipse at center,  #236799 0%,#152f54 85%);
+			}
+			iframe
+			{
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				background-color: transparent!important;
+			}
+
+		</style>
+	</head>
+	<body>
+		<!-- 
+		<iframe width="250" height="100%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/5389544&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=false"></iframe>
+		-->
+
+		<script src="js/three.min.js"></script>
+		<script>
+
+			////// AUDIO //////
+			var context;
+			window.addEventListener('load', init, false);
+			function init() 
+			{
+			  try 
+			  {
+			    // Fix up for prefixing
+			    window.AudioContext = window.AudioContext||window.webkitAudioContext;
+			    context = new AudioContext();
+			  }
+			  catch(e) 
+			  {
+			    alert('Web Audio API is not supported in this browser');
+			  }
+			}
+			////// 3D //////
+			// Our Javascript will go here.
+			var scene = new THREE.Scene();
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+			//  Changing three.js background to transparent or other color
+			var renderer = new THREE.WebGLRenderer({alpha: true});
+			renderer.setSize( window.innerWidth, window.innerHeight);
+			document.body.appendChild( renderer.domElement );
+
+			// SHAPE 1
+			var geo = new THREE.SphereGeometry(8,20,10);
+			var material = new THREE.MeshBasicMaterial({color: 0xaed2ef, wireframe: true});
+			var shape = new THREE.Mesh( geo, material );
+			scene.add(shape);
+
+			// SHAPE 2
+			var geo2 = new THREE.SphereGeometry( 1, 2, 2);
+			var mat2 = new THREE.MeshBasicMaterial( {color: 0xaed2ef, wireframe: true} );
+			var shape2 = new THREE.Mesh(geo2, mat2);
+			// scene.add(shape2);
+
+			// SHAPE 3
+			var geo3 = new THREE.SphereGeometry( 1.5, 2, 2);
+			var mat3 = new THREE.MeshBasicMaterial( {color: 0xaed2ef, wireframe: true} );
+			var shape3 = new THREE.Mesh(geo3, mat3);
+			// scene.add(shape3);
+
+			// SHAPE 4
+			var geo4 = new THREE.SphereGeometry( 2, 2, 2);
+			var mat4 = new THREE.MeshBasicMaterial( {color: 0xaed2ef, wireframe: true} );
+			var shape4 = new THREE.Mesh(geo4, mat4);
+			// scene.add(shape4);
+
+			camera.position.z = 4;
+
+			function render() {
+				requestAnimationFrame(render);
+				shape.rotation.x += 0.001;
+				shape.rotation.y += 0.001;
+				shape2.rotation.x += 0.001;
+				shape2.rotation.y += 0.005;
+				shape3.rotation.x += 0.001;
+				shape3.rotation.y += 0.005;
+				shape4.rotation.x += 0.001;
+				shape4.rotation.y += 0.005;
+				renderer.render(scene,camera);
+			}
+			render();
+
+		</script>
+	</body>
+</html>
