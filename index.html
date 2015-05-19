@@ -16,6 +16,12 @@
 
 			var cube, geometry, material;
 
+			var targetRotation = 0;
+			var mouseX = 0;
+
+			var windowHalfX = window.innerWidth / 2;
+			var windowHalfY = window.innerHeight / 2;
+
 			init();
 
 			function init ()
@@ -26,12 +32,37 @@
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				document.body.appendChild( renderer.domElement );
 				
-				geometry = new THREE.BoxGeometry( 1, 1, 1 );
-				material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+				// BOX
+				// setup box
+				geometry = new THREE.BoxGeometry( 2, 2, 2);
+				// change geometry colors
+				for ( var i = 0; i < geometry.faces.length; i += 2 ) {
+
+					var hex = Math.random() * 0xffffff;
+					geometry.faces[ i ].color.setHex( hex );
+					geometry.faces[ i + 1 ].color.setHex( hex );
+
+				}
+				material = new THREE.MeshBasicMaterial( { vertexColors: THREE.FaceColors,overdraw: .5 } );				
 				cube = new THREE.Mesh( geometry, material );
 
 				scene.add( cube );
 
+				// PLANE
+				var geometry = new THREE.PlaneBufferGeometry( 200, 200 );
+				geometry.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2 ) );
+
+				var material = new THREE.MeshBasicMaterial( { color: 0xe0e0e0, overdraw: 0.5 } );
+
+				plane = new THREE.Mesh( geometry, material );
+				scene.add( plane );
+
+				// EVENTS
+				document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+				document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+				document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+
+				// CAMERA
 				camera.position.z = 5;
 
 				window.addEventListener( 'resize', onWindowResize, false );
@@ -50,11 +81,55 @@
 
 			}
 
-			var render = function () {
+			function onDocumentMouseDown (event)
+			{
+				event.preventDefault();
+
+				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+				document.addEventListener( 'mouseup', onDocumentMouseUp, false );
+				document.addEventListener( 'mouseout', onDocumentMouseOut, false );
+			}
+
+			function onDocumentMouseMove( event ) 
+			{
+				mouseX = event.clientX - windowHalfX;
+				// console.log(mouseX);
+
+			}
+
+			function onDocumentMouseUp( event ) 
+			{
+
+			}
+
+			function onDocumentMouseOut( event ) 
+			{
+
+				document.removeEventListener( 'mousemove', onDocumentMouseMove, false );
+				document.removeEventListener( 'mouseup', onDocumentMouseUp, false );
+				document.removeEventListener( 'mouseout', onDocumentMouseOut, false );
+
+			}
+
+			function onDocumentTouchStart (event)
+			{
+				
+			}
+
+			function onDocumentTouchMove (event)
+			{
+
+			}
+
+			var render = function () 
+			{
 				requestAnimationFrame( render );
 
-				cube.rotation.x += 0.01;
-				cube.rotation.y += 0.01;
+				plane.rotation.y = cube.rotation.y += ( targetRotation - cube.rotation.y ) * 0.05;
+				cube.position.x += mouseX * 0.0005;
+
+				// cube.rotation.x += 0.005;
+				// cube.rotation.y += 0.005;
 
 				renderer.render(scene, camera);
 			};
