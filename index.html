@@ -49,27 +49,27 @@
 				// setup box
 				geometry = new THREE.BoxGeometry( 2, 2, 2);
 				// change geometry colors
-				for ( var i = 0; i < geometry.faces.length; i += 2 ) {
+				// for ( var i = 0; i < geometry.faces.length; i += 2 ) {
 
-					var hex = Math.random() * 0xffffff;
-					geometry.faces[ i ].color.setHex( hex );
-					geometry.faces[ i + 1 ].color.setHex( hex );
+				// 	var hex = Math.random() * 0xffffff;
+				// 	geometry.faces[ i ].color.setHex( hex );
+				// 	geometry.faces[ i + 1 ].color.setHex( hex );
 
-				}
-				material = new THREE.MeshBasicMaterial( { vertexColors: THREE.FaceColors,overdraw: .5 } );	
-				// material = new THREE.LineBasicMaterial();			
+				// }
+				// material = new THREE.MeshBasicMaterial( { vertexColors: THREE.FaceColors,overdraw: .5 } );	
+				material = new THREE.LineBasicMaterial({color: 0xffffff, opacity: 0, linewidth: 0.1});			
 				cube = new THREE.Mesh( geometry, material );
 
 				scene.add( cube );
 
 				// PLANE
-				var geometry = new THREE.PlaneBufferGeometry( 200, 200 );
-				geometry.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2 ) );
+				// var geometry = new THREE.PlaneBufferGeometry( 200, 200 );
+				// geometry.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2 ) );
 
-				var material = new THREE.MeshBasicMaterial( { color: 0xe0e0e0, overdraw: 0.5 } );
+				// var material = new THREE.MeshBasicMaterial( { color: 0xe0e0e0, overdraw: 0.5 } );
 
-				plane = new THREE.Mesh( geometry, material );
-				scene.add( plane );
+				// plane = new THREE.Mesh( geometry, material );
+				// scene.add( plane );
 
 				// EVENTS
 				document.addEventListener( 'mousedown', onDocumentMouseDown, false );
@@ -167,7 +167,7 @@
 			{
 				requestAnimationFrame( render );
 
-				plane.rotation.y = cube.rotation.y += ( targetRotation - cube.rotation.y ) * 0.05;
+				// plane.rotation.y = cube.rotation.y += ( targetRotation - cube.rotation.y ) * 0.05;
 				cube.position.x += mouseX * 0.0005;
 				cube.position.y -= mouseY * 0.0005;
 
