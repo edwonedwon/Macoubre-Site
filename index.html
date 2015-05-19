@@ -18,6 +18,7 @@
 
 			var targetRotation = 0;
 			var mouseX = 0;
+			var mouseY = 0;
 
 			var windowHalfX = window.innerWidth / 2;
 			var windowHalfY = window.innerHeight / 2;
@@ -93,6 +94,7 @@
 			function onDocumentMouseMove( event ) 
 			{
 				mouseX = event.clientX - windowHalfX;
+				mouseY = event.clientY - windowHalfY;
 				// console.log(mouseX);
 
 			}
@@ -127,6 +129,7 @@
 
 				plane.rotation.y = cube.rotation.y += ( targetRotation - cube.rotation.y ) * 0.05;
 				cube.position.x += mouseX * 0.0005;
+				cube.position.y -= mouseY * 0.0005;
 
 				// cube.rotation.x += 0.005;
 				// cube.rotation.y += 0.005;
