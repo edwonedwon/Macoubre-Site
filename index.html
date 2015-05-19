@@ -11,6 +11,17 @@
 		<iframe width="250" height="100%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/5389544&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=false"></iframe>
 		-->
 		<script src="js/three.min.js"></script>
+
+		<script src="js/shaders/ConvolutionShader.js"></script>
+		<script src="js/shaders/CopyShader.js"></script>
+		<script src="js/shaders/FXAAShader.js"></script>
+
+		<script src="js/postprocessing/EffectComposer.js"></script>
+		<script src="js/postprocessing/MaskPass.js"></script>
+		<script src="js/postprocessing/RenderPass.js"></script>
+		<script src="js/postprocessing/ShaderPass.js"></script>
+		<script src="js/postprocessing/BloomPass.js"></script>
+
 		<script>
 			var camera, scene, renderer;
 
@@ -32,6 +43,7 @@
 				renderer = new THREE.WebGLRenderer();
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				document.body.appendChild( renderer.domElement );
+				renderer.autoClear = false;
 				
 				// BOX
 				// setup box
@@ -44,7 +56,8 @@
 					geometry.faces[ i + 1 ].color.setHex( hex );
 
 				}
-				material = new THREE.MeshBasicMaterial( { vertexColors: THREE.FaceColors,overdraw: .5 } );				
+				material = new THREE.MeshBasicMaterial( { vertexColors: THREE.FaceColors,overdraw: .5 } );	
+				// material = new THREE.LineBasicMaterial();			
 				cube = new THREE.Mesh( geometry, material );
 
 				scene.add( cube );
@@ -66,6 +79,29 @@
 				// CAMERA
 				camera.position.z = 5;
 
+				// POST
+				
+				var renderModel = new THREE.RenderPass( scene, camera );
+				var effectBloom = new THREE.BloomPass( 1.3 );
+				var effectCopy = new THREE.ShaderPass( THREE.CopyShader );
+
+				effectFXAA = new THREE.ShaderPass( THREE.FXAAShader );
+
+				var width = window.innerWidth || 2;
+				var height = window.innerHeight || 2;
+
+				effectFXAA.uniforms[ 'resolution' ].value.set( 1 / width, 1 / height );
+
+				effectCopy.renderToScreen = true;
+
+				composer = new THREE.EffectComposer( renderer );
+
+				composer.addPass( renderModel );
+				composer.addPass( effectFXAA );
+				composer.addPass( effectBloom );
+				composer.addPass( effectCopy );
+
+
 				window.addEventListener( 'resize', onWindowResize, false );
 			}
 
@@ -79,6 +115,10 @@
 				camera.updateProjectionMatrix();
 
 				renderer.setSize( window.innerWidth, window.innerHeight );
+
+				effectFXAA.uniforms[ 'resolution' ].value.set( 1 / window.innerWidth, 1 / window.innerHeight );
+
+				composer.reset();
 
 			}
 
@@ -133,8 +173,10 @@
 
 				// cube.rotation.x += 0.005;
 				// cube.rotation.y += 0.005;
-
-				renderer.render(scene, camera);
+				
+				// renderer.render(scene, camera);
+				renderer.clear();
+				composer.render();
 			};
 
 			render();
