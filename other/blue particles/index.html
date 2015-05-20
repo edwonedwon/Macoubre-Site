@@ -12,26 +12,37 @@
 			iframe
 			{
 				position: absolute;
+				top: 200px;
 				bottom: 0px;
 				left: 0px;
 				background-color: transparent!important;
 			}
-
-		</style>
-	</head>
-	<body>
-		
-<iframe width="350" height="100%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/5389544&amp;color=000000&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>
-		
-		<div id="WebGL-output">
-		</div>
-
-		<style>
+			#cover
+			{
+				position: static;
+				
+			}
+	/*		#player
+			{
+				position: static;
+			}*/
 			body {
 			  margin: 0;
 			  overflow: hidden;
 			}
 		</style>
+	</head>
+	<body>	
+
+		<div>
+			<div id = "cover">
+				<img src="src/images/call-cover.jpg" width="200" height="200">
+			</div>
+			<div id = "player">
+				<iframe width="200" height="100%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/109265307&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=false"></iframe>
+			</div>
+		</div>
+
 	<script src="js/three.min.js"></script>
 	<script>
 		    // once everything is loaded, we run our Three.js stuff.
@@ -63,6 +74,8 @@
 	        var step = 0;
 
 	        var knot;
+
+			window.addEventListener( 'resize', onWindowResize, false );
 
 	        // setup the control gui
 	        var controls = new function () {
@@ -158,6 +171,23 @@
 	            requestAnimationFrame(render);
 	            webGLRenderer.render(scene, camera);
 	        }
+
+	        function onWindowResize() 
+			{
+
+				windowHalfX = window.innerWidth / 2;
+				windowHalfY = window.innerHeight / 2;
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				webGLRenderer.setSize( window.innerWidth, window.innerHeight );
+
+				effectFXAA.uniforms[ 'resolution' ].value.set( 1 / window.innerWidth, 1 / window.innerHeight );
+
+				composer.reset();
+
+			}
 
 	  
 	    </script>

@@ -38,16 +38,19 @@
 			window.addEventListener('load', init, false);
 			function init() 
 			{
-			  try 
-			  {
-			    // Fix up for prefixing
-			    window.AudioContext = window.AudioContext||window.webkitAudioContext;
-			    context = new AudioContext();
-			  }
-			  catch(e) 
-			  {
-			    alert('Web Audio API is not supported in this browser');
-			  }
+	  			window.addEventListener( 'resize', onWindowResize, false );
+
+				try 
+				{
+				// Fix up for prefixing
+				window.AudioContext = window.AudioContext||window.webkitAudioContext;
+				context = new AudioContext();
+				}
+				catch(e) 
+				{
+				alert('Web Audio API is not supported in this browser');
+				}
+
 			}
 			////// 3D //////
 			// Our Javascript will go here.
@@ -85,6 +88,23 @@
 
 			camera.position.z = 4;
 
+	        function onWindowResize() 
+			{
+
+				windowHalfX = window.innerWidth / 2;
+				windowHalfY = window.innerHeight / 2;
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+				effectFXAA.uniforms[ 'resolution' ].value.set( 1 / window.innerWidth, 1 / window.innerHeight );
+
+				composer.reset();
+
+			}
+
 			function render() {
 				requestAnimationFrame(render);
 				shape.rotation.x += 0.001;
@@ -97,6 +117,7 @@
 				shape4.rotation.y += 0.005;
 				renderer.render(scene,camera);
 			}
+
 			render();
 
 		</script>
