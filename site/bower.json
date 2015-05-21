@@ -1,0 +1,23 @@
+{
+  "name": "reactor",
+  "version": "0.1.0",
+  "homepage": "https://github.com/eddietree/eddietree.github.io",
+  "authors": [
+    "Eddie Lee <eddie@funktroniclabs.com>"
+  ],
+  "description": "recator",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "threejs": "*",
+    "jquery": "*",
+    "bootstrap": "~3.3.4",
+    "reset-css": "~2.0.20110126"
+  }
+}
