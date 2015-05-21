@@ -1,3 +1,4 @@
 /site/node_modules
 
 /site/bower_components
+/site/build

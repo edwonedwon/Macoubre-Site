@@ -43,6 +43,12 @@ gulp.task('styles', function() {
     .pipe(notify({ message: 'Styles task complete' }));
 });
 
+gulp.task('obj', function() {
+  return gulp.src('src/obj/*')
+    .pipe(gulp.dest('build/assets/obj'))
+    .pipe(notify({ message: 'Obj task complete' }));
+});
+
 gulp.task('images', function() {
   return gulp.src('src/images/*')
     .pipe(cache(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
@@ -77,6 +83,7 @@ gulp.task('watch', function() {
   gulp.watch('src/scripts/*.js', ['scripts']);
   gulp.watch('src/images/*', ['images']);
   gulp.watch('src/html/*', ['html']);
+  gulp.watch('src/obj/*', ['obj']);
 
   // Create LiveReload server
   livereload.listen();
@@ -91,7 +98,7 @@ gulp.task('watch', function() {
 /////////////////////////////////////////////////
 
 // scripts that need to be called
-var build_cmds = ['scripts', 'images', 'html', 'styles', 'bower-files'];
+var build_cmds = ['scripts', 'images', 'html', 'styles', 'obj', 'bower-files'];
 
 gulp.task('build', function(cb) {
     runSequence('clean', build_cmds, cb);
@@ -103,7 +110,7 @@ gulp.task('clean', function(cb) {
 
 gulp.task('run', function(cb) {
   runSequence('clean', 
-  	['scripts', 'images', 'html', 'styles', 'bower-files'],  // all the build tasks
+  	['scripts', 'images', 'html', 'styles', 'obj', 'bower-files'],  // all the build tasks
   	'webserver', 
   	'watch', 
   	cb);
