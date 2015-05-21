@@ -51,7 +51,7 @@ function ProfileManager()
 		this.currProfileIndex = a_index;
 
 		// profile text
-		if ( Settings.ShowProfileText ) {
+		/*if ( Settings.ShowProfileText ) {
 			var currProfileElem = $("#"+currProfile);
 			currProfileElem.fadeIn();
 
@@ -84,7 +84,7 @@ function ProfileManager()
 			}
 
 			fadeSeq(annecdoteFirst);
-		}
+		}*/
 
 		// reset camera
 		camera.position.x = 0;

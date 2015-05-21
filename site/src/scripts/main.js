@@ -24,7 +24,7 @@ function getQueryVariable(variable) {
     console.log('Query variable %s not found', variable);
 }
 
-$(function() {
+window.onload = function() {
 
 	var cmdVisual = getQueryVariable("visual");
 	var cmdShowText = getQueryVariable("text");
@@ -95,7 +95,7 @@ $(function() {
 
 	  requestAnimationFrame(animloop);
 	})();
-});
+};
 
 function render()
 {

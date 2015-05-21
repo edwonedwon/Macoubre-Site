@@ -35,8 +35,6 @@ function Mask()
 			time: {type: 'f', value: 2.0}
 		};
 
-
-
 		var shaderMaterial = new THREE.ShaderMaterial( {
 
 			uniforms: 		uniforms,
