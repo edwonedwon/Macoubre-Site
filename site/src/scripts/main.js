@@ -33,9 +33,6 @@ window.onload = function() {
 	if ( cmdShowText ) Settings.ShowProfileText = cmdShowText != 0;
 	if ( cmdAutoplay ) Settings.Autoplay = cmdAutoplay != 0;
 
-	/*if ( Settings.ShowProfileText ) {
-		$("#tip").delay(1000).fadeIn().delay(4000).fadeOut();
-	}*/
 	if ( cmdVisual ) {
 		Settings.StartProfileIndex = cmdVisual;
 	}
@@ -60,29 +57,6 @@ window.onload = function() {
 	g_profiles = new ProfileManager();
 	g_profiles.init();
 	g_profiles.loadProfile( Settings.StartProfileIndex );
-
-	/*if ( Settings.Autoplay ) {
-		console.log("autplaying..");
-
-		var DoAutoPlay = function()
-		{
-			var timeoutTime = Settings.AutoplayTimeout;
-			setTimeout(function() { g_profiles.loadNextProfile();  DoAutoPlay(); },timeoutTime)
-		}
-		DoAutoPlay();
-	}
-
-	// show stats
-	if ( Settings.ShowFPS ) {
-		var stats = new Stats();
-		stats.setMode(1); // 0: fps, 1: ms
-
-		// align top-left
-		stats.domElement.style.position = 'absolute';
-		stats.domElement.style.right = '0px';
-		stats.domElement.style.top = '0px';
-		document.body.appendChild( stats.domElement );
-	}*/
 
 	(function animloop(){
 

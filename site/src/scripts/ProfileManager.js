@@ -25,13 +25,6 @@ function ProfileManager()
 
 		// hide all other profile texts
 		var i;
-		/*for( i = 0; i < numProfiles; i++ )
-		{
-			var currProfileName = "profile_" + i;
-			var divElem = $("#"+currProfileName);
-			divElem.stop();
-			divElem.hide();
-		}*/
 
 		// enable current profile1
 		var currProfile = "profile_" + a_index;
@@ -49,42 +42,6 @@ function ProfileManager()
 		}
 
 		this.currProfileIndex = a_index;
-
-		// profile text
-		/*if ( Settings.ShowProfileText ) {
-			var currProfileElem = $("#"+currProfile);
-			currProfileElem.fadeIn();
-
-			$("#lags").fadeIn();
-
-			// stop all animations
-			$(".annecdote").dequeue();
-			$(".annecdote").stop(true,true);
-			$(".annecdote").hide();
-
-			var annecdoteFirst = $("#"+currProfile + " > div.annecdotes:first > div.annecdote:first");
-			var thisObj = this;
-
-			function fadeSeq( a_annecdote )
-			{
-				var currentProfileTest = "profile_"+thisObj.currProfileIndex;
-				if ( currProfile != currentProfileTest) 
-					return;
-
-				 var seq = a_annecdote.fadeIn().delay(Settings.AnnecdoteWaitTime).fadeOut(null, function() 
-					{ 
-						var nextObj = a_annecdote.next();
-						if ( nextObj.length === 0 )
-						{
-							nextObj = a_annecdote.siblings().first();
-						}
-						//console.log(nextObj);
-						fadeSeq(nextObj);
-					});
-			}
-
-			fadeSeq(annecdoteFirst);
-		}*/
 
 		// reset camera
 		camera.position.x = 0;
@@ -129,12 +86,10 @@ window.onkeyup = function( event ) {
 	if ( keyCode == spaceKeyCode || keyCode == arrowRightKeyCode )
 	{
 		g_profiles.loadNextProfile();
-		$("#tip").dequeue().stop().fadeOut();
 	}
 	else if ( keyCode == arrowLeftKeyCode )
 	{
 		g_profiles.loadPrevProfile();
-		$("#tip").dequeue().stop().fadeOut();
 	}
 	else if ( keyCode >= numOffset && keyCode < numMax )
 	{
