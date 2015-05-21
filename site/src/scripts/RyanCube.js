@@ -78,8 +78,8 @@ function RyanCube()
 		scene.add( this.mesh );
 
 
-		var cube = new THREE.Mesh( new THREE.CubeGeometry( 3, 3, 3 ), new THREE.MeshNormalMaterial() );
-		scene.add(cube);
+		//var cube = new THREE.Mesh( new THREE.CubeGeometry( 3, 3, 3 ), new THREE.MeshNormalMaterial() );
+		//scene.add(cube);
 		//cube.position.y = 150;
 
 
