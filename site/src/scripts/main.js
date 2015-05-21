@@ -26,6 +26,59 @@ function getQueryVariable(variable) {
 
 window.onload = function() {
 
+
+var music_closed = false;
+$( "#music-btn" ).click(function() {
+  //alert( "Handler for .click() called." );
+
+  var leftClose = "-=200";
+  var leftOpen = "+=200";
+
+  if ( !music_closed )
+  {
+	   $( "#soundcloudplayer" ).animate({
+	    //opacity: 0.25,
+	    left: leftClose,
+	    //height: "toggle"
+	  }, 500, function() {
+	    // Animation complete.
+	  });
+
+	   $( "#music-btn" ).animate({
+	    //opacity: 0.25,
+	    left: leftClose,
+	    //height: "toggle"
+	  }, 500, function() {
+	    // Animation complete.
+	  });
+
+	   $("#music-btn").text("▶");
+	}
+	else
+	{
+		$( "#soundcloudplayer" ).animate({
+		    //opacity: 0.25,
+		    left: leftOpen,
+		    //height: "toggle"
+		  }, 500, function() {
+		    // Animation complete.
+		  });
+
+		   $( "#music-btn" ).animate({
+		    //opacity: 0.25,
+		    left: leftOpen,
+		    //height: "toggle"
+		  }, 500, function() {
+		    // Animation complete.
+		  });
+
+		   $("#music-btn").text("◀");
+	} 
+
+	music_closed = !music_closed;
+
+	});
+
 	var cmdVisual = getQueryVariable("visual");
 	var cmdShowText = getQueryVariable("text");
 	var cmdAutoplay = getQueryVariable("autoplay");
