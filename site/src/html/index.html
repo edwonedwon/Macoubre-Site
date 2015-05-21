@@ -111,38 +111,29 @@
 
   </script>
 
-  <script id="vertexShaderMaskNight" type="x-shader/x-vertex">
+  <script id="vertexShaderCube" type="x-shader/x-vertex">
 
       precision mediump float;
       precision mediump int;
 
       //attribute vec3 pos;
       attribute vec4 color;
-      //attribute vec3 normal;
+      //attribute vec3 data;
 
       varying vec3 vPosition;
       varying vec4 vColor;
-      varying vec3 vNormal;
-      varying vec4 vPositionMVP;
-      varying float vTime;
 
       uniform float time;
 
       void main() {
+          float distFromCenter = length(position);
+
           vec3 posFinal = position;
-          vPosition = posFinal;
-
-          posFinal.xz += step(sin(time*2.0 + posFinal.y*10.0 + posFinal.z*10.0), 0.8) * vec2(0.5, 1.0);
-
-          vNormal = normal.xyz;
-          vColor = vec4(normal.xyz, 1.0);
-
-          vTime = time;
 
           vPosition = posFinal;
-          vec4 posFinalMVP = projectionMatrix * modelViewMatrix * vec4( posFinal, 1.0 );
-          vPositionMVP = posFinalMVP;
-          gl_Position = posFinalMVP;
+          vColor = color;
+
+          gl_Position = projectionMatrix * modelViewMatrix * vec4( posFinal, 1.0 );
       }
 
   </script>
@@ -168,14 +159,15 @@
           float pulsateDist = sin(distFromCenter*(sin(time*0.2) + 0.5) + time*0.5);
           float offsetX = pulsateDist * 1.7 * sin( 0.1*position.x  + time*0.5 );
           float offsetY = pulsateDist * 1.7 * cos( 0.1*position.y  + time*0.5 );
-          posFinal.x += offsetX*0.1;
+          posFinal.x += offsetX*0.3;
           //posFinal.y += offsetY*0.7;
           posFinal.z -= offsetY*0.2;
 
           vPosition = posFinal;
           vColor = color + vec4(offsetY)*0.5;
 
-          gl_Position = projectionMatrix * modelViewMatrix * vec4( posFinal, 1.0 );
+          vec4 posMVP = projectionMatrix * modelViewMatrix * vec4( posFinal, 1.0 );
+          gl_Position = posMVP;
       }
   </script>
 

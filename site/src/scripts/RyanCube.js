@@ -14,61 +14,36 @@ function RyanCube()
 		var colors = [];
 		var indices_array = [];
 
-		var numPtsX = 128;
-		var numPtsY = 128;
-		var numVerts = numPtsX * numPtsY;
-		var deltaStep = 0.3;
+		var box_center = new THREE.Vector3(0,0,0);
+		var box_width = 1.8;
 
-		// generate verts
-		var posXOffset = -numPtsX * deltaStep * 0.5;
-		var posYOffset = -numPtsY * deltaStep * 0.5;
+		positions.push( -box_width, -box_width, -box_width );
+		positions.push(  box_width, -box_width, -box_width );
+		positions.push( box_width, 	box_width, -box_width );
+		positions.push( -box_width, box_width, -box_width );
+		positions.push( -box_width, -box_width, box_width );
+		positions.push(  box_width, -box_width, box_width );
+		positions.push( box_width, 	box_width, box_width );
+		positions.push( -box_width, 	box_width, box_width );
 
-		for ( var y = 0; y < numPtsY; y++ )
+		for ( i = 0; i < 8; i+=1 )
 		{
-			for ( var x = 0; x < numPtsX; x++ )
-			{
-				var posX = posXOffset + x * deltaStep;
-				var posY = posYOffset + y * deltaStep;
-				var posZ = 6.0;
-
-				positions.push(posX, posY,posZ);
-				colors.push(1,1,1,0.2);
-				//colors.push(0.5,0.5,0.5);
-			}
+			colors.push(0.8,1,1,1.0);
 		}
 
-		// generate indices
-		for ( var y = 0; y < numPtsY-1; y++ )
-		{
-			var rowIndexOffset = y * numPtsX;
+		indices_array.push(0, 1);	
+		indices_array.push(1, 2);	
+		indices_array.push(2, 3);	
+		indices_array.push(3, 0);	
+		indices_array.push(4, 5);	
+		indices_array.push(5, 6);	
+		indices_array.push(6, 7);	
+		indices_array.push(7, 4);
 
-			for ( var x = 0; x < numPtsX-1; x++ )
-			{
-				var indexCurr = rowIndexOffset + x;	
-				var indexRight = indexCurr + 1;	
-				var indexTop = indexCurr + numPtsX;	
-				var indexTopRight = indexTop + 1;	
-
-				indices_array.push(indexCurr, indexTopRight);	
-				//indices_array.push(indexCurr, indexTop);	
-			}
-		}
-
-		// top row - needs to stitch together
-		for ( var x = 0; x < numPtsX-1; x++ )
-		{
-			var index0 = (numPtsY-1)*numPtsX + x;
-			var index1 = index0 + 1;
-			indices_array.push(index0, index1);
-		}
-
-		// right col - needs to stitch together
-		for ( var y = 0; y < numPtsY-1; y++ )
-		{
-			var index0 = y*numPtsX + numPtsX-1;
-			var index1 = index0 + numPtsX;
-			indices_array.push(index0, index1);
-		}
+		indices_array.push(1, 5);	
+		indices_array.push(2, 6);	
+		indices_array.push(3, 7);	
+		indices_array.push(0, 4);	
 
 		// vert attrib
 		geometry.addAttribute( 'index', new THREE.BufferAttribute( new Uint16Array( indices_array ), 1 ) );
@@ -90,7 +65,7 @@ function RyanCube()
 
 			uniforms: 		uniforms,
 			attributes:     attributes,
-			vertexShader:   document.getElementById( 'vertexShaderPolybear' ).textContent,
+			vertexShader:   document.getElementById( 'vertexShaderCube' ).textContent,
 			fragmentShader: document.getElementById( 'fragmentShaderLines' ).textContent,
 
 			//blending: 		THREE.AdditiveBlending,
@@ -101,6 +76,13 @@ function RyanCube()
 		this.mesh = new THREE.Line( geometry, shaderMaterial, THREE.LinePieces );
 		//this.mesh = new THREE.Mesh( geometry, shaderMaterial );
 		scene.add( this.mesh );
+
+		/*var cube = new THREE.Mesh(new THREE.CubeGeometry(4, 4, 4), new THREE.MeshBasicMaterial({
+	        wireframe: true,
+	        color: 'white'
+	      }));
+	      cube.rotation.x = Math.PI * 0.1;
+	      scene.add(cube);*/
 	};
 
 	this.release = function()
@@ -112,6 +94,6 @@ function RyanCube()
 	this.update = function()
 	{
 		this.time += g_dt;
-		this.mesh.material.uniforms.time.value = this.time;
+		//this.mesh.material.uniforms.time.value = this.time;
 	};
 }
