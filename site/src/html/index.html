@@ -3,8 +3,19 @@
 	<title>test</title>
   <link rel="stylesheet" href="assets/lib/reset.css">
   <link rel="stylesheet" href="assets/styles/main.css">
+
+  <style>
+  #soundcloudplayer {
+   position: absolute;
+    top: 0px;
+    left: 0px;
+  }
+</style>
+
 </head>
 <body>
+
+<iframe id="soundcloudplayer" width="200" height="100%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/109542701&amp;color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe> 
 
 
 <script id="vertexShaderLines" type="x-shader/x-vertex">
@@ -291,9 +302,11 @@
           gl_FragColor = finalColor;
       }
   </script>
-  <!--script type="text/javascript" src="assets/lib/jquery.js" ></script>-->
+  <script type="text/javascript" src="assets/lib/jquery.js" ></script>
   <!--<script type="text/javascript" src="assets/lib/bootstrap.js" ></script>-->
   <script type="text/javascript" src="assets/lib/three.js" ></script>
   <script type="text/javascript" src="assets/js/main.min.js" ></script>
+
+
 </body>
 </html>
