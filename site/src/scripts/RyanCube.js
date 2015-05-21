@@ -28,7 +28,7 @@ function RyanCube()
 
 		for ( i = 0; i < 8; i+=1 )
 		{
-			colors.push(0.8,1,1,1.0);
+			colors.push(0.8,1,1,0.5);
 		}
 
 		indices_array.push(0, 1);	
@@ -76,6 +76,12 @@ function RyanCube()
 		this.mesh = new THREE.Line( geometry, shaderMaterial, THREE.LinePieces );
 		//this.mesh = new THREE.Mesh( geometry, shaderMaterial );
 		scene.add( this.mesh );
+
+
+		var cube = new THREE.Mesh( new THREE.CubeGeometry( 3, 3, 3 ), new THREE.MeshNormalMaterial() );
+		scene.add(cube);
+		//cube.position.y = 150;
+
 
 		/*var cube = new THREE.Mesh(new THREE.CubeGeometry(4, 4, 4), new THREE.MeshBasicMaterial({
 	        wireframe: true,

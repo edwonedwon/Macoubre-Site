@@ -17,7 +17,7 @@ function RyanLines()
 		var numPtsX = 64;
 		var numPtsY = 64;
 		var numVerts = numPtsX * numPtsY;
-		var deltaStep = 0.3;
+		var deltaStep = 0.5;
 
 		// generate verts
 		var posXOffset = -numPtsX * deltaStep * 0.5;
@@ -28,8 +28,8 @@ function RyanLines()
 			for ( var x = 0; x < numPtsX; x++ )
 			{
 				var posX = posXOffset + x * deltaStep;
-				var posY = posYOffset + y * deltaStep;
-				var posZ = 6.0;
+				var posY = -2.5;
+				var posZ = posYOffset + y * deltaStep;
 
 				positions.push(posX, posY,posZ);
 				colors.push(1,1,1,0.2);

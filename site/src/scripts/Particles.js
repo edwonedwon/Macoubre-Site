@@ -37,7 +37,7 @@ function Particles()
 		var numPoints = 512;
 		var numFloatsPerPos = 3;
 		var numFloatsPerColor = 3;
-		var posRadius = 9.0;
+		var posRadius = 9.5;
 
 		var positions = new Float32Array( numPoints*numFloatsPerPos );
 		var colors = new Float32Array( numPoints*numFloatsPerColor );
