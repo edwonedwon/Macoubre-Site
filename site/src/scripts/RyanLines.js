@@ -14,8 +14,8 @@ function RyanLines()
 		var colors = [];
 		var indices_array = [];
 
-		var numPtsX = 128;
-		var numPtsY = 128;
+		var numPtsX = 64;
+		var numPtsY = 64;
 		var numVerts = numPtsX * numPtsY;
 		var deltaStep = 0.3;
 
