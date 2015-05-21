@@ -158,10 +158,10 @@
           vec3 posFinal = position;
           float pulsateDist = sin(distFromCenter*(sin(time*0.05) + 0.5) + time*0.5);
           float offsetX = pulsateDist * 1.7 * sin( 0.1*position.x  + time*0.5 );
-          float offsetY = pulsateDist * 1.7 * cos( 0.3*position.y  + time*0.5 );
-          posFinal.x += offsetX*0.5;
+          float offsetY = pulsateDist * 1.7 * cos( 0.5*position.y  + time*0.5 );
+          posFinal.x += offsetX*0.3;
           //posFinal.y += offsetY*0.7;
-          posFinal.y -= offsetY*0.2;
+          posFinal.y -= offsetY*0.25;
 
           vPosition = posFinal;
 
