@@ -6,9 +6,8 @@ function Particles()
 	{
 		this.time = 0.0;
 
-		renderer.setClearColor( 0x777777, 1);
+		renderer.setClearColor( 0x1E414B, 1);
 
-		console.log("HEYYY");
 		this.initParticles();
 	};
 

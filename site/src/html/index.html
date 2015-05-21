@@ -225,7 +225,7 @@
           float pointSizeReal = 100.0;
           float pointSize = pointSizeReal * distToEyePlane / distanceToCamera;
 
-          gl_PointSize = pointSize + abs(distance)*10.0;
+          gl_PointSize = pointSize + abs(distance)*20.0;
 
           vPosition = posFinal;
           vDistance = distance;
@@ -248,7 +248,7 @@
           float distFromCenter = length( uv*2.0 - vec2(1.0) );
           float alpha = smoothstep(0.0, abs(vDistance), 1.0-distFromCenter);
 
-          gl_FragColor = vec4(1.0,1.0,1.0,alpha);
+          gl_FragColor = vec4(0.7,1.0,0.9,alpha);
       }
   </script>
 
