@@ -5,7 +5,7 @@ function ProfileManager()
 		this.currProfileIndex = -1;
 		this.profiles = 
 		[
-			["particles"],
+			["particles", "ryanCube", "ryanLines"],
 			/*["lines"],
 			["spikes"],
 			["terrain"],

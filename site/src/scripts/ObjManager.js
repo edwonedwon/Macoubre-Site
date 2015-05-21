@@ -5,6 +5,8 @@ function ObjManager()
 		this.objs = 
 		{
 			particles:new Particles(),
+			ryanCube:new RyanCube(),
+			ryanLines:new RyanLines(),
 			/*terrain:new Terrain(),
 			lines: new Lines(),
 			spikes: new Spikes(),
