@@ -5,13 +5,13 @@ function ProfileManager()
 		this.currProfileIndex = -1;
 		this.profiles = 
 		[
-			["lines"],
+			["particles"],
+			/*["lines"],
 			["spikes"],
 			["terrain"],
 			["polybear"],
 			//["mask"],
-			["particles"],
-			["cubes"],
+			["cubes"],*/
 		];
 	};
 
@@ -20,7 +20,7 @@ function ProfileManager()
 		var numProfiles = this.profiles.length;
 
 		// ignore bad profiles
-		if ( a_index < 0 || a_index >= numProfiles) {
+		if ( a_index < 0 || a_index >= numProfiles || a_index == this.currProfileIndex) {
 			return;
 		}
 
