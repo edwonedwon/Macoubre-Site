@@ -4,12 +4,15 @@ function ObjManager()
 	{
 		this.objs = 
 		{
-			terrain:new Terrain(),
+			particles:new Particles(),
+			ryanCube:new RyanCube(),
+			ryanLines:new RyanLines(),
+			/*terrain:new Terrain(),
 			lines: new Lines(),
 			spikes: new Spikes(),
 			polybear:new Polybear(),
-			cubes:new CubeWorld(),
-			mask:new Mask(),
+			cubes:new CubeWorld(),*/
+			//mask:new Mask(),
 		};
 
 		/*for (var property in this.objs ) {
